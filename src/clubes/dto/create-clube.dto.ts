@@ -1,8 +1,8 @@
-import { IsString, Min, IsMongoId, IsOptional} from 'class-validator';
+import { IsString, MinLength, IsOptional, IsObject } from 'class-validator';
 
 export class CreateClubeDto {
   @IsString()
-  @Min(4)
+  @MinLength(4)
   name: string;
 
   @IsString()
@@ -12,7 +12,7 @@ export class CreateClubeDto {
   @IsOptional()
   logo: string;
 
-  @IsString()
+  @IsObject()
   @IsOptional()
   colors: {
     primary: string;

@@ -1,7 +1,7 @@
 import { Document } from 'mongoose';
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 
-Schema();
+@Schema({ timestamps: { createdAt: true } })
 export class Clube extends Document {
   @Prop({
     unique: true,
