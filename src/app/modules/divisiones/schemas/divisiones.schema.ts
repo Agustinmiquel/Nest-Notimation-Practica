@@ -1,5 +1,6 @@
-import { Document } from 'mongoose';
+import { Document, SchemaTypes } from 'mongoose';
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
+import { Club } from '../../clubes/schemas/clubes.schema';
 
 @Schema()
 export class Divisiones extends Document {
@@ -10,10 +11,12 @@ export class Divisiones extends Document {
   name: string;
 
   @Prop({
-    index: true,
     unique: true,
+    type: SchemaTypes.ObjectId,
+    ref: 'Clubes',
+    default: null,
   })
-  club: string;
+  club: Club;
 }
 
 export const DivisionesSchema = SchemaFactory.createForClass(Divisiones);

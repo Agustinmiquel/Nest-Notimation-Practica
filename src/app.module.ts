@@ -1,7 +1,7 @@
 import { Module } from '@nestjs/common';
-import { ClubesModule } from './clubes/clubes.module';
-import { DivisionesModule } from './divisiones/divisiones.module';
-import { UsuariosModule } from './usuarios/usuarios.module';
+import { ClubesModule } from './app/modules/clubes/clubes.module';
+import { DivisionesModule } from './app/modules/divisiones/divisiones.module';
+import { UsuariosModule } from './app/modules/usuarios/usuarios.module';
 import { MongooseModule } from '@nestjs/mongoose';
 import { AuthModule } from './auth/auth.module';
 import { ConfigModule } from '@nestjs/config';

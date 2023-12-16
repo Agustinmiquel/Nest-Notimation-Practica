@@ -2,7 +2,7 @@ import { Document } from 'mongoose';
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
 
 @Schema({ timestamps: { createdAt: true } })
-export class Clube extends Document {
+export class Club extends Document {
   @Prop({
     unique: true,
     index: true,
@@ -22,4 +22,4 @@ export class Clube extends Document {
   logo: string;
 }
 
-export const ClubesSchema = SchemaFactory.createForClass(Clube);
+export const ClubesSchema = SchemaFactory.createForClass(Club);
