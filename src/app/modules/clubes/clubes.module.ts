@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClubesService } from './clubes.service';
 import { ClubesController } from './clubes.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Clube, ClubesSchema } from './schemas/clubes.schema';
+import { Club, ClubesSchema } from './schemas/clubes.schema';
 
 @Module({
   controllers: [ClubesController],
@@ -10,7 +10,7 @@ import { Clube, ClubesSchema } from './schemas/clubes.schema';
   imports: [
     MongooseModule.forFeature([
       {
-        name: Clube.name,
+        name: Club.name,
         schema: ClubesSchema,
       },
     ]),

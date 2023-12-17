@@ -2,18 +2,19 @@ import {
   BadRequestException,
   Injectable,
   InternalServerErrorException,
+  NotFoundException,
 } from '@nestjs/common';
 import { CreateClubeDto } from './dto/create-clube.dto';
 import { UpdateClubeDto } from './dto/update-clube.dto';
 import { Model } from 'mongoose';
-import { Clube } from './schemas/clubes.schema';
+import { Club } from './schemas/clubes.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ClubesService {
   constructor(
-    @InjectModel(Clube.name)
-    private clubesModel: Model<Clube>,
+    @InjectModel(Club.name)
+    private clubesModel: Model<Club>,
   ) {}
 
   async create(createClubeDto: CreateClubeDto) {
@@ -39,11 +40,23 @@ export class ClubesService {
     return await this.clubesModel.findById(id);
   }
 
-  update(id: number, updateClubeDto: UpdateClubeDto) {
-    return `This action updates a #${id} clube`;
+  async update(id: string, updateClubeDto: UpdateClubeDto) {
+    const club = await this.clubesModel.findByIdAndUpdate(id);
+
+    if (updateClubeDto.name)
+      updateClubeDto.name = updateClubeDto.name.toLowerCase();
+
+    if (!club) {
+      throw new NotFoundException(`No se ha encontrado un club con id ${id}`);
+    }
+
+    await club.updateOne({ ...updateClubeDto }, { new: true });
+
+    return club;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} clube`;
+  async remove(id: string) {
+    const club = await this.findOne(id);
+    await club.deleteOne();
   }
 }

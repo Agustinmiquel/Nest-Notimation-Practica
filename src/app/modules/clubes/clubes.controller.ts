@@ -32,11 +32,11 @@ export class ClubesController {
 
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateClubeDto: UpdateClubeDto) {
-    return this.clubesService.update(+id, updateClubeDto);
+    return this.clubesService.update(id, updateClubeDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.clubesService.remove(+id);
+    return this.clubesService.remove(id);
   }
 }
