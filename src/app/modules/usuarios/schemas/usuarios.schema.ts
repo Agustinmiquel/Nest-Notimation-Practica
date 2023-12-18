@@ -24,8 +24,6 @@ export class Usuario extends Document {
   lastname: string;
 
   @Prop({
-    unique: true,
-    index: true,
     required: true,
   })
   rol: string;
@@ -45,7 +43,7 @@ export class Usuario extends Document {
 
   @Prop({
     type: SchemaTypes.ObjectId,
-    ref: 'Clube',
+    ref: 'Club',
     default: null,
   })
   club: Club;

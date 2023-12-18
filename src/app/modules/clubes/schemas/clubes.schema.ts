@@ -20,6 +20,22 @@ export class Club extends Document {
     index: true,
   })
   logo: string;
+
+  @Prop({
+    required: true,
+    type: {
+      primary: String,
+      alternative: String,
+      secondary: String,
+      detail: String,
+    },
+  })
+  colors: {
+    primary: string;
+    alternative: string;
+    secondary: string;
+    detail: string;
+  };
 }
 
 export const ClubesSchema = SchemaFactory.createForClass(Club);

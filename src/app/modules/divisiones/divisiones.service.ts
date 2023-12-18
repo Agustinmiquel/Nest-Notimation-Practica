@@ -1,11 +1,25 @@
 import { Injectable } from '@nestjs/common';
 import { CreateDivisioneDto } from './dto/create-divisione.dto';
 import { UpdateDivisioneDto } from './dto/update-divisione.dto';
+import { Divisiones } from './schemas/divisiones.schema';
+import { Error, Model } from 'mongoose';
+import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class DivisionesService {
-  create(createDivisioneDto: CreateDivisioneDto) {
-    return 'This action adds a new divisione';
+  constructor(
+    @InjectModel(Divisiones.name)
+    private readonly divisionesModel: Model<Divisiones>,
+  ) {}
+
+  async create(createDivisioneDto: CreateDivisioneDto) {
+    try {
+      const division = await this.divisionesModel.create(createDivisioneDto);
+      return division;
+    } catch (error) {
+      console.log(error);
+      throw new Error('No se creo la division');
+    }
   }
 
   findAll() {

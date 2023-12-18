@@ -1,4 +1,12 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+} from '@nestjs/common';
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
@@ -19,7 +27,13 @@ export class UsuariosController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.usuariosService.findOne(+id);
+    return this.usuariosService.findOneUser(id);
+  }
+
+  @Get('byClub/:clubId')
+  async findByClubId(@Param('clubId') clubId: string) {
+    const users = await this.usuariosService.findByClub(clubId);
+    return users;
   }
 
   @Patch(':id')

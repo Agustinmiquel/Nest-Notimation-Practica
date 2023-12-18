@@ -6,15 +6,14 @@ import { Club } from '../../clubes/schemas/clubes.schema';
 export class Divisiones extends Document {
   @Prop({
     index: true,
-    unique: true,
   })
   name: string;
 
   @Prop({
-    unique: true,
     type: SchemaTypes.ObjectId,
-    ref: 'Clubes',
+    ref: 'Club',
     default: null,
+    required: true,
   })
   club: Club;
 }
