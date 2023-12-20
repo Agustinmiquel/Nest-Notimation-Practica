@@ -10,12 +10,17 @@ import {
 import { DivisionesService } from './divisiones.service';
 import { CreateDivisioneDto } from './dto/create-divisione.dto';
 import { UpdateDivisioneDto } from './dto/update-divisione.dto';
+import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('Divisiones')
+@ApiBearerAuth()
 @Controller('divisiones')
 export class DivisionesController {
   constructor(private readonly divisionesService: DivisionesService) {}
 
   @Post()
+  @ApiResponse({ status: 201, description: 'La division ha sido creada' })
+  @ApiResponse({ status: 403, description: 'No se pudo crear la division' })
   create(@Body() createDivisioneDto: CreateDivisioneDto) {
     return this.divisionesService.create(createDivisioneDto);
   }

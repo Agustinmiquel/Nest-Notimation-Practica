@@ -10,12 +10,17 @@ import {
 import { UsuariosService } from './usuarios.service';
 import { CreateUsuarioDto } from './dto/create-usuario.dto';
 import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
+@ApiTags('Usuarios')
+@ApiBearerAuth()
 @Controller('usuarios')
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post()
+  @ApiResponse({ status: 201, description: 'El usuario ha sido creado' })
+  @ApiResponse({ status: 403, description: 'No se pudo crear el usuario' })
   create(@Body() createUsuarioDto: CreateUsuarioDto) {
     return this.usuariosService.create(createUsuarioDto);
   }
@@ -36,9 +41,15 @@ export class UsuariosController {
     return users;
   }
 
+  @Get('byDivision/:divisionId')
+  async findByDivision(@Param('divisionId') divisionId: string) {
+    const user = await this.usuariosService.findByDivision(divisionId);
+    return user;
+  }
+
   @Patch(':id')
   update(@Param('id') id: string, @Body() updateUsuarioDto: UpdateUsuarioDto) {
-    return this.usuariosService.update(+id, updateUsuarioDto);
+    return this.usuariosService.update(id, updateUsuarioDto);
   }
 
   @Delete(':id')

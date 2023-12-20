@@ -41,11 +41,43 @@ export class UsuariosService {
     }
   }
 
-  update(id: number, updateUsuarioDto: UpdateUsuarioDto) {
-    return `This action updates a #${id} usuario`;
+  async findByDivision(divisionId: string) {
+    try {
+      const division = await this.usuariosModel
+        .find({ division: divisionId })
+        .exec();
+      return division;
+    } catch (error) {
+      throw new NotFoundException(`No se encontro la division ${divisionId}`);
+    }
+  }
+
+  async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+    const user = this.usuariosModel.findByIdAndUpdate(id, updateUsuarioDto);
+
+    if (!user) {
+      throw new NotFoundException(`El usuario con este id: ${id} no existe`);
+    }
+
+    return user;
   }
 
   remove(id: number) {
     return `This action removes a #${id} usuario`;
+  }
+
+  async findOne(
+    firstname: string,
+    email: string,
+  ): Promise<Usuario | undefined> {
+    try {
+      const user = await this.usuariosModel
+        .findOne({ firstname, email })
+        .exec();
+      return user;
+    } catch (error) {
+      console.log(error);
+      return undefined;
+    }
   }
 }
