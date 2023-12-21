@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUsuarioDto } from './dto/create-usuario.dto';
-import { UpdateUsuarioDto } from './dto/update-usuario.dto';
+import { CreateUsuarioDto, UpdateUsuarioDto } from './Usuarios.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Usuario } from './schemas/usuarios.schema';
+import { Usuario } from './usuarios.schema';
 import { Model } from 'mongoose';
 
 @Injectable()
@@ -62,8 +61,8 @@ export class UsuariosService {
     return user;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} usuario`;
+  async remove(id: string) {
+    return await this.usuariosModel.deleteOne({ _id: id });
   }
 
   async findOne(

@@ -1,4 +1,6 @@
 import { IsString, IsNotEmpty } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
+
 export class CreateDivisioneDto {
   @IsString()
   @IsNotEmpty()
@@ -7,3 +9,5 @@ export class CreateDivisioneDto {
   @IsNotEmpty()
   club: string;
 }
+
+export class UpdateDivisionesDto extends PartialType(CreateDivisioneDto) {}

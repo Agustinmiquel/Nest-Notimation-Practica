@@ -8,8 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { DivisionesService } from './divisiones.service';
-import { CreateDivisioneDto } from './dto/create-divisione.dto';
-import { UpdateDivisioneDto } from './dto/update-divisione.dto';
+import { CreateDivisioneDto, UpdateDivisionesDto } from './Divisiones.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Divisiones')
@@ -38,13 +37,13 @@ export class DivisionesController {
   @Patch(':id')
   update(
     @Param('id') id: string,
-    @Body() updateDivisioneDto: UpdateDivisioneDto,
+    @Body() updateDivisioneDto: UpdateDivisionesDto,
   ) {
     return this.divisionesService.update(+id, updateDivisioneDto);
   }
 
   @Delete(':id')
   remove(@Param('id') id: string) {
-    return this.divisionesService.remove(+id);
+    return this.divisionesService.remove(id);
   }
 }

@@ -4,10 +4,9 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateClubeDto } from './dto/create-clube.dto';
-import { UpdateClubeDto } from './dto/update-clube.dto';
+import { CreateClubesDto, UpdateClubesDto } from './Clubes.dto';
 import { Model } from 'mongoose';
-import { Club } from './schemas/clubes.schema';
+import { Club } from './clubes.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
@@ -17,7 +16,7 @@ export class ClubesService {
     private clubesModel: Model<Club>,
   ) {}
 
-  async create(createClubeDto: CreateClubeDto) {
+  async create(createClubeDto: CreateClubesDto) {
     createClubeDto.name = createClubeDto.name.toLocaleLowerCase();
 
     try {
@@ -40,23 +39,22 @@ export class ClubesService {
     return await this.clubesModel.findById(id);
   }
 
-  async update(id: string, updateClubeDto: UpdateClubeDto) {
+  async update(id: string, updateClubesDto: UpdateClubesDto) {
     const club = await this.clubesModel.findByIdAndUpdate(id);
 
-    if (updateClubeDto.name)
-      updateClubeDto.name = updateClubeDto.name.toLowerCase();
+    if (updateClubesDto.name)
+      updateClubesDto.name = updateClubesDto.name.toLowerCase();
 
     if (!club) {
       throw new NotFoundException(`No se ha encontrado un club con id ${id}`);
     }
 
-    await club.updateOne({ ...updateClubeDto }, { new: true });
+    await club.updateOne({ ...updateClubesDto }, { new: true });
 
     return club;
   }
 
   async remove(id: string) {
-    const club = await this.findOne(id);
-    await club.deleteOne();
+    return await this.clubesModel.deleteOne({ _id: id });
   }
 }

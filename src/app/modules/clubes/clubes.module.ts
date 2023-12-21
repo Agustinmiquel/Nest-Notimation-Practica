@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { ClubesService } from './clubes.service';
 import { ClubesController } from './clubes.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Club, ClubesSchema } from './schemas/clubes.schema';
+import { Club, ClubesSchema } from './clubes.schema';
 
 @Module({
   controllers: [ClubesController],

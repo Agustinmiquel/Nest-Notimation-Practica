@@ -8,8 +8,7 @@ import {
   Delete,
 } from '@nestjs/common';
 import { ClubesService } from './clubes.service';
-import { CreateClubeDto } from './dto/create-clube.dto';
-import { UpdateClubeDto } from './dto/update-clube.dto';
+import { CreateClubesDto, UpdateClubesDto } from './Clubes.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Clubes')
@@ -21,7 +20,7 @@ export class ClubesController {
   @Post()
   @ApiResponse({ status: 201, description: 'El club ha sido creado' })
   @ApiResponse({ status: 403, description: 'El club no se pudo crear' })
-  create(@Body() createClubeDto: CreateClubeDto) {
+  create(@Body() createClubeDto: CreateClubesDto) {
     return this.clubesService.create(createClubeDto);
   }
 
@@ -36,7 +35,7 @@ export class ClubesController {
   }
 
   @Patch(':id')
-  update(@Param('id') id: string, @Body() updateClubeDto: UpdateClubeDto) {
+  update(@Param('id') id: string, @Body() updateClubeDto: UpdateClubesDto) {
     return this.clubesService.update(id, updateClubeDto);
   }
 

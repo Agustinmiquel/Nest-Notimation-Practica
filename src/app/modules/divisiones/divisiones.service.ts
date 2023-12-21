@@ -1,7 +1,6 @@
 import { Injectable } from '@nestjs/common';
-import { CreateDivisioneDto } from './dto/create-divisione.dto';
-import { UpdateDivisioneDto } from './dto/update-divisione.dto';
-import { Divisiones } from './schemas/divisiones.schema';
+import { CreateDivisioneDto, UpdateDivisionesDto } from './Divisiones.dto';
+import { Divisiones } from './divisiones.schema';
 import { Error, Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
@@ -30,11 +29,11 @@ export class DivisionesService {
     return `This action returns a #${id} divisione`;
   }
 
-  update(id: number, updateDivisioneDto: UpdateDivisioneDto) {
+  update(id: number, updateDivisioneDto: UpdateDivisionesDto) {
     return `This action updates a #${id} divisione`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} divisione`;
+  async remove(id: string) {
+    return await this.divisionesModel.deleteOne({ _id: id });
   }
 }

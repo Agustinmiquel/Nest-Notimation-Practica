@@ -6,7 +6,8 @@ import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConfigModule } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
-import { AuthModule } from './auth/auth.module';
+import { AuthModule } from './app/modules/auth/auth.module';
+import { SharedModule } from './app/shared/shared.module';
 
 @Module({
   imports: [
@@ -20,6 +21,7 @@ import { AuthModule } from './auth/auth.module';
       signOptions: { expiresIn: '1h' },
     }),
     AuthModule,
+    SharedModule,
   ],
   controllers: [],
   providers: [],

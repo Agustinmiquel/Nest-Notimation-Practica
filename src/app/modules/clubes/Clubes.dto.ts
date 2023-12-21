@@ -1,6 +1,7 @@
 import { IsString, MinLength, IsOptional, IsObject } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
-export class CreateClubeDto {
+export class CreateClubesDto {
   @IsString()
   @MinLength(4)
   name: string;
@@ -21,3 +22,5 @@ export class CreateClubeDto {
     detail: string;
   };
 }
+
+export class UpdateClubesDto extends PartialType(CreateClubesDto) {}

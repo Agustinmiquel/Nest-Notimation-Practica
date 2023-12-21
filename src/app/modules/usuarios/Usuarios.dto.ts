@@ -5,6 +5,7 @@ import {
   IsNumber,
   IsNotEmpty,
 } from 'class-validator';
+import { PartialType } from '@nestjs/mapped-types';
 
 export class CreateUsuarioDto {
   @IsString()
@@ -32,3 +33,5 @@ export class CreateUsuarioDto {
   @IsNotEmpty()
   club: string;
 }
+
+export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {}
