@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { ClubesService } from './clubes.service';
-import { ClubesController } from './clubes.controller';
+import { ClubesService } from './clubs.service';
+import { ClubesController } from './clubs.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Club, ClubesSchema } from './clubes.schema';
+import { Club, ClubesSchema } from './clubs.schema';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Module({
   controllers: [ClubesController],
@@ -14,6 +15,7 @@ import { Club, ClubesSchema } from './clubes.schema';
         schema: ClubesSchema,
       },
     ]),
+    SharedModule,
   ],
 })
 export class ClubesModule {}

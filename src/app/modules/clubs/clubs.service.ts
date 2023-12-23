@@ -4,9 +4,9 @@ import {
   InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateClubesDto, UpdateClubesDto } from './Clubes.dto';
+import { CreateClubesDto, UpdateClubesDto } from './Clubs.dto';
 import { Model } from 'mongoose';
-import { Club } from './clubes.schema';
+import { Club } from './clubs.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()

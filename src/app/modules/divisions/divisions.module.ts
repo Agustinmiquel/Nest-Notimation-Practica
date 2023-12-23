@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { DivisionesService } from './divisiones.service';
-import { DivisionesController } from './divisiones.controller';
+import { DivisionesService } from './divisions.service';
+import { DivisionesController } from './divisions.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Divisiones, DivisionesSchema } from './divisiones.schema';
+import { Divisiones, DivisionesSchema } from './divisions.schema';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Module({
   controllers: [DivisionesController],
@@ -14,6 +15,7 @@ import { Divisiones, DivisionesSchema } from './divisiones.schema';
         schema: DivisionesSchema,
       },
     ]),
+    SharedModule,
   ],
 })
 export class DivisionesModule {}

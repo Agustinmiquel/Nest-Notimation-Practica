@@ -7,8 +7,8 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { UsuariosService } from './usuarios.service';
-import { CreateUsuarioDto, UpdateUsuarioDto } from './Usuarios.dto';
+import { UsuariosService } from './users.service';
+import { CreateUsuarioDto, UpdateUsuarioDto } from './Users.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Usuarios')

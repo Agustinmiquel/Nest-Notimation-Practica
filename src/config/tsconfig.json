@@ -1,8 +1,0 @@
-
-
-"paths": {
-    "@modules/*": ["src/app/modules/*"],
-    "@configs/*": ["src/config/*"],
-    "@shared/*": ["src/app/shared/*"],
-    "@database/*": ["src/app/database/*"],
-}

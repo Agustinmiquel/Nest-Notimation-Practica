@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
-import { ClubesModule } from './app/modules/clubes/clubes.module';
-import { DivisionesModule } from './app/modules/divisiones/divisiones.module';
-import { UsuariosModule } from './app/modules/usuarios/usuarios.module';
+import { ClubesModule } from './app/modules/clubs/clubs.module';
+import { DivisionesModule } from './app/modules/divisions/divisions.module';
+import { UsuariosModule } from './app/modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConfigModule } from '@nestjs/config';
-import { JwtModule } from '@nestjs/jwt';
 import { AuthModule } from './app/modules/auth/auth.module';
 import { SharedModule } from './app/shared/shared.module';
 
@@ -16,10 +15,6 @@ import { SharedModule } from './app/shared/shared.module';
     UsuariosModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_UR),
-    JwtModule.register({
-      secret: process.env.JWT_SECRET,
-      signOptions: { expiresIn: '1h' },
-    }),
     AuthModule,
     SharedModule,
   ],

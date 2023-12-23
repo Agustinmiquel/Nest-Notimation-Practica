@@ -1,8 +1,9 @@
 import { Module } from '@nestjs/common';
-import { UsuariosService } from './usuarios.service';
-import { UsuariosController } from './usuarios.controller';
-import { UsuarioSchema, Usuario } from './usuarios.schema';
+import { UsuariosService } from './users.service';
+import { UsuariosController } from './users.controller';
+import { UsuarioSchema, Usuario } from './users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
+import { SharedModule } from 'src/app/shared/shared.module';
 
 @Module({
   controllers: [UsuariosController],
@@ -15,6 +16,7 @@ import { MongooseModule } from '@nestjs/mongoose';
         schema: UsuarioSchema,
       },
     ]),
+    SharedModule,
   ],
 })
 export class UsuariosModule {}

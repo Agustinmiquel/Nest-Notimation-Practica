@@ -7,8 +7,8 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { DivisionesService } from './divisiones.service';
-import { CreateDivisioneDto, UpdateDivisionesDto } from './Divisiones.dto';
+import { DivisionesService } from './divisions.service';
+import { CreateDivisioneDto, UpdateDivisionesDto } from './Divisions.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Divisiones')
@@ -31,7 +31,7 @@ export class DivisionesController {
 
   @Get(':id')
   findOne(@Param('id') id: string) {
-    return this.divisionesService.findOne(+id);
+    return this.divisionesService.findOne(id);
   }
 
   @Patch(':id')
@@ -39,7 +39,7 @@ export class DivisionesController {
     @Param('id') id: string,
     @Body() updateDivisioneDto: UpdateDivisionesDto,
   ) {
-    return this.divisionesService.update(+id, updateDivisioneDto);
+    return this.divisionesService.update(id, updateDivisioneDto);
   }
 
   @Delete(':id')

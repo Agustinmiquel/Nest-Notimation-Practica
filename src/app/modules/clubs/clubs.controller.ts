@@ -7,8 +7,8 @@ import {
   Param,
   Delete,
 } from '@nestjs/common';
-import { ClubesService } from './clubes.service';
-import { CreateClubesDto, UpdateClubesDto } from './Clubes.dto';
+import { ClubesService } from './clubs.service';
+import { CreateClubesDto, UpdateClubesDto } from './Clubs.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Clubes')
