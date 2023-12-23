@@ -6,41 +6,53 @@ import {
   Patch,
   Param,
   Delete,
+  HttpCode,
+  HttpStatus,
 } from '@nestjs/common';
 import { ClubesService } from './clubs.service';
 import { CreateClubesDto, UpdateClubesDto } from './Clubs.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
-@ApiTags('Clubes')
+@ApiTags('Clubs')
 @ApiBearerAuth()
-@Controller('clubes')
+@Controller('clubs')
 export class ClubesController {
   constructor(private readonly clubesService: ClubesService) {}
 
   @Post()
+  @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 201, description: 'El club ha sido creado' })
   @ApiResponse({ status: 403, description: 'El club no se pudo crear' })
   create(@Body() createClubeDto: CreateClubesDto) {
-    return this.clubesService.create(createClubeDto);
+    const u = this.clubesService.create(createClubeDto);
+    return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
   @Get()
+  @HttpCode(HttpStatus.OK)
   findAll() {
-    return this.clubesService.findAll();
+    const u = this.clubesService.findAll();
+    return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Get(':id')
+  @HttpCode(HttpStatus.OK)
   findOne(@Param('id') id: string) {
-    return this.clubesService.findOne(id);
+    const u = this.clubesService.findOne(id);
+    return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Patch(':id')
+  @HttpCode(HttpStatus.OK)
   update(@Param('id') id: string, @Body() updateClubeDto: UpdateClubesDto) {
-    return this.clubesService.update(id, updateClubeDto);
+    const u = this.clubesService.update(id, updateClubeDto);
+    return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Delete(':id')
+  @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {
-    return this.clubesService.remove(id);
+    const u = this.clubesService.remove(id);
+    return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 }
