@@ -8,10 +8,12 @@ import {
   Delete,
   HttpCode,
   HttpStatus,
+  UseGuards,
 } from '@nestjs/common';
 import { UsuariosService } from './users.service';
-import { CreateUsuarioDto, UpdateUsuarioDto } from './Users.dto';
+import { CreateUsuarioDto, LoginDto, UpdateUsuarioDto } from './Users.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
+import { AuthGuard } from 'src/app/shared/guards/auth.guard';
 
 @ApiTags('Users')
 @ApiBearerAuth()
@@ -19,12 +21,21 @@ import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 export class UsuariosController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
-  @Post()
+  @Post('register')
   @ApiResponse({ status: 201, description: 'El usuario ha sido creado' })
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 403, description: 'No se pudo crear el usuario' })
-  create(@Body() createUsuarioDto: CreateUsuarioDto) {
-    const u = this.usuariosService.create(createUsuarioDto);
+  async create(@Body() createUsuarioDto: CreateUsuarioDto) {
+    const u = await this.usuariosService.registerUser(createUsuarioDto);
+    console.log(u);
+    return { statuscode: HttpStatus.CREATED, result: { data: u } };
+  }
+
+  @Post('/login')
+  @ApiBearerAuth()
+  @HttpCode(HttpStatus.OK)
+  async signIn(@Body() loginDto: LoginDto) {
+    const u = await this.usuariosService.signIn(loginDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
@@ -33,6 +44,7 @@ export class UsuariosController {
   @HttpCode(HttpStatus.OK)
   findAll() {
     const u = this.usuariosService.findAll();
+    console.log(u);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 

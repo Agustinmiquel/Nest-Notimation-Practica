@@ -1,17 +1,29 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { CreateUsuarioDto, UpdateUsuarioDto } from './Users.dto';
+import {
+  BadRequestException,
+  Injectable,
+  NotFoundException,
+  UnauthorizedException,
+} from '@nestjs/common';
+import { CreateUsuarioDto, LoginDto, UpdateUsuarioDto } from './Users.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Usuario } from './users.schema';
 import { Model } from 'mongoose';
+import * as bcrypt from 'bcrypt';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class UsuariosService {
   constructor(
     @InjectModel(Usuario.name)
     private readonly usuariosModel: Model<Usuario>,
+    private jwtService: JwtService,
   ) {}
 
-  async create(createUsuarioDto: CreateUsuarioDto) {
+  async registerUser(createUsuarioDto: CreateUsuarioDto) {
+    createUsuarioDto.password = await bcrypt.hash(
+      createUsuarioDto.password,
+      10,
+    );
     return await this.usuariosModel.create(createUsuarioDto);
   }
 
@@ -50,5 +62,32 @@ export class UsuariosService {
     email: string,
   ): Promise<Usuario | undefined> {
     return await this.usuariosModel.findOne({ firstname, email }).exec();
+  }
+
+  async signIn(loginDto: { email: string; password: string }) {
+    const user = await this.usuariosModel.findOne({ email: loginDto.email });
+    if (!user) {
+      throw new UnauthorizedException('Usuario no encontrado');
+    }
+
+    const isPasswordValid = await bcrypt.compare(
+      loginDto.password,
+      user.password,
+    );
+
+    if (!isPasswordValid) {
+      throw new BadRequestException('Contraseña incorrecta');
+    }
+
+    const payload = {
+      sub: user.id,
+      firstname: user.firstname,
+      email: user.email,
+    };
+
+    return {
+      email: loginDto.email,
+      access_token: await this.jwtService.signAsync(payload),
+    };
   }
 }

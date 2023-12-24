@@ -12,14 +12,12 @@ export class Usuario extends Document {
   email: string;
 
   @Prop({
-    unique: true,
     index: true,
   })
   firstname: string;
 
   @Prop({
-    unique: true,
-    index: true,
+    required: true,
   })
   lastname: string;
 
@@ -29,10 +27,15 @@ export class Usuario extends Document {
   rol: string;
 
   @Prop({
-    unique: true,
     index: true,
   })
   phone: number;
+
+  @Prop({
+    index: true,
+    required: true,
+  })
+  password: string;
 
   @Prop({
     type: SchemaTypes.ObjectId,

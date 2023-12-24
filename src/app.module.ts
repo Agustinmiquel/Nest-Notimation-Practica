@@ -5,7 +5,6 @@ import { UsuariosModule } from './app/modules/users/users.module';
 import { MongooseModule } from '@nestjs/mongoose';
 
 import { ConfigModule } from '@nestjs/config';
-import { AuthModule } from './app/modules/auth/auth.module';
 import { SharedModule } from './app/shared/shared.module';
 
 @Module({
@@ -15,7 +14,6 @@ import { SharedModule } from './app/shared/shared.module';
     UsuariosModule,
     ConfigModule.forRoot(),
     MongooseModule.forRoot(process.env.MONGO_UR),
-    AuthModule,
     SharedModule,
   ],
   controllers: [],
