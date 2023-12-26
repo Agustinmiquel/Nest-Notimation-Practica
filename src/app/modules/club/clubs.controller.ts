@@ -9,36 +9,36 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ClubesService } from './clubs.service';
-import { CreateClubesDto, UpdateClubesDto } from './Clubs.dto';
+import { ClubsService } from './clubs.service';
+import { CreateClubsDto, UpdateClubsDto } from './Clubs.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Clubs')
 @ApiBearerAuth()
 @Controller('clubs')
-export class ClubesController {
-  constructor(private readonly clubesService: ClubesService) {}
+export class ClubsController {
+  constructor(private readonly clubsService: ClubsService) {}
 
   @Post()
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 201, description: 'El club ha sido creado' })
   @ApiResponse({ status: 403, description: 'El club no se pudo crear' })
-  async create(@Body() createClubeDto: CreateClubesDto) {
-    const u = await this.clubesService.create(createClubeDto);
+  async create(@Body() createClubeDto: CreateClubsDto) {
+    const u = await this.clubsService.create(createClubeDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll() {
-    const u = await this.clubesService.findAll();
+    const u = await this.clubsService.findAll();
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: string) {
-    const u = await this.clubesService.findOne(id);
+    const u = await this.clubsService.findOne(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -46,16 +46,16 @@ export class ClubesController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() updateClubeDto: UpdateClubesDto,
+    @Body() updateClubeDto: UpdateClubsDto,
   ) {
-    const u = await this.clubesService.update(id, updateClubeDto);
+    const u = await this.clubsService.update(id, updateClubeDto);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async remove(@Param('id') id: string) {
-    const u = await this.clubesService.remove(id);
+    const u = await this.clubsService.remove(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 }

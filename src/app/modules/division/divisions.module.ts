@@ -1,13 +1,13 @@
 import { Module } from '@nestjs/common';
-import { DivisionesService } from './divisions.service';
-import { DivisionesController } from './divisions.controller';
+import { DivisionsService } from './divisions.service';
+import { DivisionsController } from './divisions.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { Divisiones, DivisionesSchema } from './divisions.schema';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Module({
-  controllers: [DivisionesController],
-  providers: [DivisionesService],
+  controllers: [DivisionsController],
+  providers: [DivisionsService],
   imports: [
     MongooseModule.forFeature([
       {
@@ -18,4 +18,4 @@ import { SharedModule } from 'src/app/shared/shared.module';
     SharedModule,
   ],
 })
-export class DivisionesModule {}
+export class DivisionsModule {}

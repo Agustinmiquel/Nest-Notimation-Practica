@@ -1,34 +1,31 @@
 import {
   BadRequestException,
   Injectable,
-  InternalServerErrorException,
   NotFoundException,
 } from '@nestjs/common';
-import { CreateClubesDto, UpdateClubesDto } from './Clubs.dto';
+import { CreateClubsDto, UpdateClubsDto } from './Clubs.dto';
 import { Model } from 'mongoose';
 import { Club } from './clubs.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
-export class ClubesService {
+export class ClubsService {
   constructor(
     @InjectModel(Club.name)
     private clubesModel: Model<Club>,
   ) {}
 
-  async create(createClubeDto: CreateClubesDto) {
+  async create(createClubeDto: CreateClubsDto) {
     createClubeDto.name = createClubeDto.name.toLocaleLowerCase();
+    const existName = await this.clubesModel.findOne({
+      name: createClubeDto.name,
+    });
 
-    try {
-      const clubes = await this.clubesModel.create(createClubeDto);
-      return clubes;
-    } catch (error) {
-      if (error.code === 11000) {
-        throw new BadRequestException('El Club ya existe en la BD');
-      }
-      console.log(error);
-      throw new InternalServerErrorException('Error interno en el servidor');
+    if (existName) {
+      throw new BadRequestException('El Club ya existe en la BD');
     }
+
+    return this.clubesModel.create(createClubeDto);
   }
 
   async findAll() {
@@ -39,7 +36,7 @@ export class ClubesService {
     return await this.clubesModel.findById(id);
   }
 
-  async update(id: string, updateClubesDto: UpdateClubesDto) {
+  async update(id: string, updateClubesDto: UpdateClubsDto) {
     const club = await this.clubesModel.findByIdAndUpdate(id);
 
     if (updateClubesDto.name)

@@ -1,11 +1,10 @@
 import { Module } from '@nestjs/common';
 import { JwtModule } from '@nestjs/jwt';
-import { jwtConstants } from './constants';
 
 @Module({
   imports: [
     JwtModule.register({
-      secret: jwtConstants.secret,
+      secret: process.env.JWTSECRET,
       signOptions: { expiresIn: '1h' },
       global: true,
     }),

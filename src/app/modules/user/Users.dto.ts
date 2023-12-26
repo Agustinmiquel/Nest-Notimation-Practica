@@ -9,7 +9,7 @@ import {
 import { PartialType } from '@nestjs/mapped-types';
 import { UserRoles } from 'src/app/shared/enum/userRoles.enum';
 
-export class CreateUsuarioDto {
+export class CreateUsersDto {
   @IsString()
   email: string;
 
@@ -41,7 +41,7 @@ export class CreateUsuarioDto {
   club: string;
 }
 
-export class UpdateUsuarioDto extends PartialType(CreateUsuarioDto) {}
+export class UpdateUsuarioDto extends PartialType(CreateUsersDto) {}
 
 export class LoginDto {
   @IsString()

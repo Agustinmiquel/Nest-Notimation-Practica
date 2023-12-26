@@ -5,7 +5,7 @@ import {
   UnauthorizedException,
 } from '@nestjs/common';
 import {
-  CreateUsuarioDto,
+  CreateUsersDto,
   LoginDto,
   UpdateRolUser,
   UpdateUsuarioDto,
@@ -15,12 +15,12 @@ import { Usuario } from './users.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
-import { DivisionesService } from '../division/divisions.service';
+import { DivisionsService } from '../division/divisions.service';
 import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class UsuariosService {
-  private divisionService: DivisionesService;
+  private divisionService: DivisionsService;
   constructor(
     @InjectModel(Usuario.name)
     private readonly usuariosModel: Model<Usuario>,
@@ -29,12 +29,12 @@ export class UsuariosService {
   ) {}
 
   onModuleInit() {
-    this.divisionService = this.moduleRef.get(DivisionesService, {
+    this.divisionService = this.moduleRef.get(DivisionsService, {
       strict: false,
     });
   }
 
-  async registerUser(createUsuarioDto: CreateUsuarioDto) {
+  async registerUser(createUsuarioDto: CreateUsersDto) {
     createUsuarioDto.password = await bcrypt.hash(
       createUsuarioDto.password,
       10,

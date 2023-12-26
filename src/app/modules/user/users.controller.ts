@@ -3,7 +3,6 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
@@ -12,7 +11,7 @@ import {
 } from '@nestjs/common';
 import { UsuariosService } from './users.service';
 import {
-  CreateUsuarioDto,
+  CreateUsersDto,
   LoginDto,
   UpdateRolUser,
   UpdateUsuarioDto,
@@ -22,14 +21,14 @@ import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 @ApiTags('Users')
 @ApiBearerAuth()
 @Controller('users')
-export class UsuariosController {
+export class UsersController {
   constructor(private readonly usuariosService: UsuariosService) {}
 
   @Post('register')
   @ApiResponse({ status: 201, description: 'El usuario ha sido creado' })
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 403, description: 'No se pudo crear el usuario' })
-  async create(@Body() createUsuarioDto: CreateUsuarioDto) {
+  async create(@Body() createUsuarioDto: CreateUsersDto) {
     const u = await this.usuariosService.registerUser(createUsuarioDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
@@ -73,7 +72,7 @@ export class UsuariosController {
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
-  @Patch(':id')
+  @Put(':id')
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async update(

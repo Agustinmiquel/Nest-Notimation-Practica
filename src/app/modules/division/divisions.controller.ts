@@ -3,59 +3,59 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
-import { DivisionesService } from './divisions.service';
-import { CreateDivisioneDto, UpdateDivisionesDto } from './Divisions.dto';
+import { DivisionsService } from './divisions.service';
+import { CreateDivisionsDto, UpdateDivisionsDto } from './Divisions.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
 @ApiTags('Divisions')
 @ApiBearerAuth()
 @Controller('divisions')
-export class DivisionesController {
-  constructor(private readonly divisionesService: DivisionesService) {}
+export class DivisionsController {
+  constructor(private readonly divisionsService: DivisionsService) {}
 
   @Post()
   @ApiResponse({ status: 201, description: 'La division ha sido creada' })
   @ApiResponse({ status: 403, description: 'No se pudo crear la division' })
   @HttpCode(HttpStatus.CREATED)
-  async create(@Body() createDivisioneDto: CreateDivisioneDto) {
-    const u = await this.divisionesService.create(createDivisioneDto);
+  async create(@Body() createDivisionsDto: CreateDivisionsDto) {
+    const u = await this.divisionsService.create(createDivisionsDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
   async findAll() {
-    const u = await this.divisionesService.findAll();
+    const u = await this.divisionsService.findAll();
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: string) {
-    const u = await this.divisionesService.findOne(id);
+    const u = await this.divisionsService.findOne(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
-  @Patch(':id')
+  @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() updateDivisioneDto: UpdateDivisionesDto,
+    @Body() updateDivisionsDto: UpdateDivisionsDto,
   ) {
-    const u = await this.divisionesService.update(id, updateDivisioneDto);
+    const u = await this.divisionsService.update(id, updateDivisionsDto);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
   async remove(@Param('id') id: string) {
-    const u = await this.divisionesService.remove(id);
+    const u = await this.divisionsService.remove(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 }

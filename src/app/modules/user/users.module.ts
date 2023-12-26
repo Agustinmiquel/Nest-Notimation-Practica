@@ -1,12 +1,12 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { UsuariosService } from './users.service';
-import { UsuariosController } from './users.controller';
+import { UsersController } from './users.controller';
 import { UsuarioSchema, Usuario } from './users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { DivisionesModule } from '../division/divisions.module';
+import { DivisionsModule } from '../division/divisions.module';
 
 @Module({
-  controllers: [UsuariosController],
+  controllers: [UsersController],
   providers: [UsuariosService],
   exports: [UsuariosService],
   imports: [
@@ -16,7 +16,7 @@ import { DivisionesModule } from '../division/divisions.module';
         schema: UsuarioSchema,
       },
     ]),
-    forwardRef(() => DivisionesModule),
+    forwardRef(() => DivisionsModule),
   ],
 })
-export class UsuariosModule {}
+export class UsersModule {}
