@@ -1,7 +1,7 @@
 import { Module, forwardRef } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { UsuarioSchema, Users } from './users.schema';
+import { UserSchema, Users } from './users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DivisionsModule } from '../division/divisions.module';
 
@@ -13,7 +13,7 @@ import { DivisionsModule } from '../division/divisions.module';
     MongooseModule.forFeature([
       {
         name: Users.name,
-        schema: UsuarioSchema,
+        schema: UserSchema,
       },
     ]),
     forwardRef(() => DivisionsModule),

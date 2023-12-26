@@ -41,7 +41,7 @@ export class CreateUsersDto {
   club: string;
 }
 
-export class UpdateUsuarioDto extends PartialType(CreateUsersDto) {}
+export class UpdateUserDto extends PartialType(CreateUsersDto) {}
 
 export class LoginDto {
   @IsString()

@@ -52,4 +52,4 @@ export class Users extends Document {
   club: Clubs;
 }
 
-export const UsuarioSchema = SchemaFactory.createForClass(Users);
+export const UserSchema = SchemaFactory.createForClass(Users);

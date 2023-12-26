@@ -18,4 +18,4 @@ export class Divisions extends Document {
   club: Clubs;
 }
 
-export const DivisionesSchema = SchemaFactory.createForClass(Divisions);
+export const DivisionsSchema = SchemaFactory.createForClass(Divisions);

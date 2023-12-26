@@ -2,7 +2,7 @@ import { Module } from '@nestjs/common';
 import { DivisionsService } from './divisions.service';
 import { DivisionsController } from './divisions.controller';
 import { MongooseModule } from '@nestjs/mongoose';
-import { Divisions, DivisionesSchema } from './divisions.schema';
+import { Divisions, DivisionsSchema } from './divisions.schema';
 import { SharedModule } from 'src/app/shared/shared.module';
 
 @Module({
@@ -12,7 +12,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
     MongooseModule.forFeature([
       {
         name: Divisions.name,
-        schema: DivisionesSchema,
+        schema: DivisionsSchema,
       },
     ]),
     SharedModule,

@@ -8,7 +8,7 @@ import {
   CreateUsersDto,
   LoginDto,
   UpdateRolUser,
-  UpdateUsuarioDto,
+  UpdateUserDto,
 } from './Users.dto';
 import { InjectModel } from '@nestjs/mongoose';
 import { Users } from './users.schema';
@@ -20,16 +20,16 @@ import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
 export class UsersService {
-  private divisionService: DivisionsService;
+  private divisionsService: DivisionsService;
   constructor(
     @InjectModel(Users.name)
-    private readonly usuariosModel: Model<Users>,
+    private readonly userModel: Model<Users>,
     private jwtService: JwtService,
     private readonly moduleRef: ModuleRef,
   ) {}
 
   onModuleInit() {
-    this.divisionService = this.moduleRef.get(DivisionsService, {
+    this.divisionsService = this.moduleRef.get(DivisionsService, {
       strict: false,
     });
   }
@@ -39,28 +39,28 @@ export class UsersService {
       createUsuarioDto.password,
       10,
     );
-    return await this.usuariosModel.create(createUsuarioDto);
+    return await this.userModel.create(createUsuarioDto);
   }
 
   async findAll() {
-    return await this.usuariosModel.find();
+    return await this.userModel.find();
   }
 
   async findOneUser(id: string) {
-    return await this.usuariosModel.findById(id);
+    return await this.userModel.findById(id);
   }
 
   async findByClub(clubId: string) {
-    return await this.usuariosModel.find({ club: clubId }).exec();
+    return await this.userModel.find({ club: clubId }).exec();
   }
 
   async findByDivision(divisionId: string) {
-    return await this.usuariosModel.find({ division: divisionId }).exec();
+    return await this.userModel.find({ division: divisionId }).exec();
   }
 
-  async update(id: string, updateUsuarioDto: UpdateUsuarioDto) {
+  async update(id: string, updateUsuarioDto: UpdateUserDto) {
     if (updateUsuarioDto.division) {
-      const division = await this.divisionService.findOne(
+      const division = await this.divisionsService.findOne(
         updateUsuarioDto.division,
       );
 
@@ -69,7 +69,7 @@ export class UsersService {
       }
     }
 
-    const userbefore = await this.usuariosModel.findById(id);
+    const userbefore = await this.userModel.findById(id);
 
     if (!userbefore) {
       throw new NotFoundException(`El usuario con este id: ${id} no existe`);
@@ -81,7 +81,7 @@ export class UsersService {
       updateUsuarioDto.password = hashedPassword;
     }
 
-    const user = await this.usuariosModel
+    const user = await this.userModel
       .findByIdAndUpdate(id, updateUsuarioDto, { new: true })
       .exec();
 
@@ -89,7 +89,7 @@ export class UsersService {
   }
 
   async updateRole(id: string, updateRoleDto: UpdateRolUser) {
-    return await this.usuariosModel.findByIdAndUpdate(
+    return await this.userModel.findByIdAndUpdate(
       { _id: id },
       { rol: updateRoleDto.rol },
       { new: true },
@@ -97,15 +97,15 @@ export class UsersService {
   }
 
   async remove(id: string) {
-    return await this.usuariosModel.deleteOne({ _id: id });
+    return await this.userModel.deleteOne({ _id: id });
   }
 
   async findOne(firstname: string, email: string): Promise<Users | undefined> {
-    return await this.usuariosModel.findOne({ firstname, email }).exec();
+    return await this.userModel.findOne({ firstname, email }).exec();
   }
 
   async signIn(loginDto: { email: string; password: string }) {
-    const user = await this.usuariosModel.findOne({ email: loginDto.email });
+    const user = await this.userModel.findOne({ email: loginDto.email });
     if (!user) {
       throw new UnauthorizedException('Credenciales incorrectas');
     }

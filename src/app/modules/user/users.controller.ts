@@ -14,7 +14,7 @@ import {
   CreateUsersDto,
   LoginDto,
   UpdateRolUser,
-  UpdateUsuarioDto,
+  UpdateUserDto,
 } from './Users.dto';
 import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 
@@ -22,21 +22,21 @@ import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usuariosService: UsersService) {}
+  constructor(private readonly usersService: UsersService) {}
 
   @Post('register')
   @ApiResponse({ status: 201, description: 'El usuario ha sido creado' })
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 403, description: 'No se pudo crear el usuario' })
-  async create(@Body() createUsuarioDto: CreateUsersDto) {
-    const u = await this.usuariosService.registerUser(createUsuarioDto);
+  async create(@Body() createUserDto: CreateUsersDto) {
+    const u = await this.usersService.registerUser(createUserDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
   @Post('/login')
   @HttpCode(HttpStatus.OK)
   async signIn(@Body() loginDto: LoginDto) {
-    const u = await this.usuariosService.signIn(loginDto);
+    const u = await this.usersService.signIn(loginDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
@@ -44,7 +44,7 @@ export class UsersController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async findAll() {
-    const u = await this.usuariosService.findAll();
+    const u = await this.usersService.findAll();
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -52,7 +52,7 @@ export class UsersController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async findOne(@Param('id') id: string) {
-    const u = await this.usuariosService.findOneUser(id);
+    const u = await this.usersService.findOneUser(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -60,7 +60,7 @@ export class UsersController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async findByClubId(@Param('clubId') clubId: string) {
-    const u = await this.usuariosService.findByClub(clubId);
+    const u = await this.usersService.findByClub(clubId);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -68,7 +68,7 @@ export class UsersController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   async findByDivision(@Param('divisionId') divisionId: string) {
-    const u = await this.usuariosService.findByDivision(divisionId);
+    const u = await this.usersService.findByDivision(divisionId);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -77,9 +77,9 @@ export class UsersController {
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,
-    @Body() updateUsuarioDto: UpdateUsuarioDto,
+    @Body() updateUsuarioDto: UpdateUserDto,
   ) {
-    const u = await this.usuariosService.update(id, updateUsuarioDto);
+    const u = await this.usersService.update(id, updateUsuarioDto);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
@@ -87,14 +87,14 @@ export class UsersController {
   @ApiBearerAuth()
   @HttpCode(HttpStatus.OK)
   remove(@Param('id') id: string) {
-    const u = this.usuariosService.remove(id);
+    const u = this.usersService.remove(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Put('rol/:id')
   @HttpCode(HttpStatus.OK)
   async updateRole(@Param('id') id: string, @Body() updaterole: UpdateRolUser) {
-    const user = await this.usuariosService.updateRole(id, updaterole);
+    const user = await this.usersService.updateRole(id, updaterole);
     return { statuscode: HttpStatus.OK, result: { data: user } };
   }
 }

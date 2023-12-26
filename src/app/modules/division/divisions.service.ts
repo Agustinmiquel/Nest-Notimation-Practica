@@ -8,24 +8,24 @@ import { InjectModel } from '@nestjs/mongoose';
 export class DivisionsService {
   constructor(
     @InjectModel(Divisions.name)
-    private readonly divisionesModel: Model<Divisions>,
+    private readonly divisionsModel: Model<Divisions>,
   ) {}
 
   async create(createDivisionsDto: CreateDivisionsDto) {
-    const division = await this.divisionesModel.create(createDivisionsDto);
+    const division = await this.divisionsModel.create(createDivisionsDto);
     return division;
   }
 
   async findAll() {
-    return await this.divisionesModel.find();
+    return await this.divisionsModel.find();
   }
 
   async findOne(id: string) {
-    return await this.divisionesModel.findById(id);
+    return await this.divisionsModel.findById(id);
   }
 
   async update(id: string, updateDivisionesDto: UpdateDivisionsDto) {
-    const division = await this.divisionesModel.findByIdAndUpdate(id);
+    const division = await this.divisionsModel.findByIdAndUpdate(id);
 
     if (updateDivisionesDto.name)
       updateDivisionesDto.name = updateDivisionesDto.name.toLowerCase();
@@ -40,6 +40,6 @@ export class DivisionsService {
   }
 
   async remove(id: string) {
-    return await this.divisionesModel.deleteOne({ _id: id });
+    return await this.divisionsModel.deleteOne({ _id: id });
   }
 }
