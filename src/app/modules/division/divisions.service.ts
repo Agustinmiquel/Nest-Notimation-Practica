@@ -1,14 +1,14 @@
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { CreateDivisionsDto, UpdateDivisionsDto } from './Divisions.dto';
-import { Divisiones } from './divisions.schema';
+import { Divisions } from './divisions.schema';
 import { Model } from 'mongoose';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class DivisionsService {
   constructor(
-    @InjectModel(Divisiones.name)
-    private readonly divisionesModel: Model<Divisiones>,
+    @InjectModel(Divisions.name)
+    private readonly divisionesModel: Model<Divisions>,
   ) {}
 
   async create(createDivisionsDto: CreateDivisionsDto) {

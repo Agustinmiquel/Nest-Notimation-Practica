@@ -11,7 +11,7 @@ import {
   UpdateUsuarioDto,
 } from './Users.dto';
 import { InjectModel } from '@nestjs/mongoose';
-import { Usuario } from './users.schema';
+import { Users } from './users.schema';
 import { Model } from 'mongoose';
 import * as bcrypt from 'bcrypt';
 import { JwtService } from '@nestjs/jwt';
@@ -19,11 +19,11 @@ import { DivisionsService } from '../division/divisions.service';
 import { ModuleRef } from '@nestjs/core';
 
 @Injectable()
-export class UsuariosService {
+export class UsersService {
   private divisionService: DivisionsService;
   constructor(
-    @InjectModel(Usuario.name)
-    private readonly usuariosModel: Model<Usuario>,
+    @InjectModel(Users.name)
+    private readonly usuariosModel: Model<Users>,
     private jwtService: JwtService,
     private readonly moduleRef: ModuleRef,
   ) {}
@@ -100,10 +100,7 @@ export class UsuariosService {
     return await this.usuariosModel.deleteOne({ _id: id });
   }
 
-  async findOne(
-    firstname: string,
-    email: string,
-  ): Promise<Usuario | undefined> {
+  async findOne(firstname: string, email: string): Promise<Users | undefined> {
     return await this.usuariosModel.findOne({ firstname, email }).exec();
   }
 

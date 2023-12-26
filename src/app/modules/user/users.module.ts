@@ -1,18 +1,18 @@
 import { Module, forwardRef } from '@nestjs/common';
-import { UsuariosService } from './users.service';
+import { UsersService } from './users.service';
 import { UsersController } from './users.controller';
-import { UsuarioSchema, Usuario } from './users.schema';
+import { UsuarioSchema, Users } from './users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
 import { DivisionsModule } from '../division/divisions.module';
 
 @Module({
   controllers: [UsersController],
-  providers: [UsuariosService],
-  exports: [UsuariosService],
+  providers: [UsersService],
+  exports: [UsersService],
   imports: [
     MongooseModule.forFeature([
       {
-        name: Usuario.name,
+        name: Users.name,
         schema: UsuarioSchema,
       },
     ]),

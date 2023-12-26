@@ -5,19 +5,19 @@ import {
 } from '@nestjs/common';
 import { CreateClubsDto, UpdateClubsDto } from './Clubs.dto';
 import { Model } from 'mongoose';
-import { Club } from './clubs.schema';
+import { Clubs } from './clubs.schema';
 import { InjectModel } from '@nestjs/mongoose';
 
 @Injectable()
 export class ClubsService {
   constructor(
-    @InjectModel(Club.name)
-    private clubesModel: Model<Club>,
+    @InjectModel(Clubs.name)
+    private clubsModel: Model<Clubs>,
   ) {}
 
   async create(createClubeDto: CreateClubsDto) {
     createClubeDto.name = createClubeDto.name.toLocaleLowerCase();
-    const existName = await this.clubesModel.findOne({
+    const existName = await this.clubsModel.findOne({
       name: createClubeDto.name,
     });
 
@@ -25,19 +25,19 @@ export class ClubsService {
       throw new BadRequestException('El Club ya existe en la BD');
     }
 
-    return this.clubesModel.create(createClubeDto);
+    return this.clubsModel.create(createClubeDto);
   }
 
   async findAll() {
-    return await this.clubesModel.find();
+    return await this.clubsModel.find();
   }
 
   async findOne(id: string) {
-    return await this.clubesModel.findById(id);
+    return await this.clubsModel.findById(id);
   }
 
   async update(id: string, updateClubesDto: UpdateClubsDto) {
-    const club = await this.clubesModel.findByIdAndUpdate(id);
+    const club = await this.clubsModel.findByIdAndUpdate(id);
 
     if (updateClubesDto.name)
       updateClubesDto.name = updateClubesDto.name.toLowerCase();
@@ -52,6 +52,6 @@ export class ClubsService {
   }
 
   async remove(id: string) {
-    return await this.clubesModel.deleteOne({ _id: id });
+    return await this.clubsModel.deleteOne({ _id: id });
   }
 }

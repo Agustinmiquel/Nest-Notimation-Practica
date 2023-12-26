@@ -9,7 +9,7 @@ import {
   HttpStatus,
   Put,
 } from '@nestjs/common';
-import { UsuariosService } from './users.service';
+import { UsersService } from './users.service';
 import {
   CreateUsersDto,
   LoginDto,
@@ -22,7 +22,7 @@ import { ApiBearerAuth, ApiTags, ApiResponse } from '@nestjs/swagger';
 @ApiBearerAuth()
 @Controller('users')
 export class UsersController {
-  constructor(private readonly usuariosService: UsuariosService) {}
+  constructor(private readonly usuariosService: UsersService) {}
 
   @Post('register')
   @ApiResponse({ status: 201, description: 'El usuario ha sido creado' })
