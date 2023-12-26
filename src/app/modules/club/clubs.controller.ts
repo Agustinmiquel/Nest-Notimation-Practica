@@ -3,11 +3,11 @@ import {
   Get,
   Post,
   Body,
-  Patch,
   Param,
   Delete,
   HttpCode,
   HttpStatus,
+  Put,
 } from '@nestjs/common';
 import { ClubsService } from './clubs.service';
 import { CreateClubsDto, UpdateClubsDto } from './Clubs.dto';
@@ -42,7 +42,7 @@ export class ClubsController {
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
-  @Patch(':id')
+  @Put(':id')
   @HttpCode(HttpStatus.OK)
   async update(
     @Param('id') id: string,

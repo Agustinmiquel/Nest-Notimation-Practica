@@ -46,9 +46,7 @@ export class ClubsService {
       throw new NotFoundException(`No se ha encontrado un club con id ${id}`);
     }
 
-    await club.updateOne({ ...updateClubesDto }, { new: true });
-
-    return club;
+    return await club.updateOne({ ...updateClubesDto }, { new: true });
   }
 
   async remove(id: string) {
