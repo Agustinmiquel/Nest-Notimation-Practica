@@ -7,6 +7,7 @@ import {
   MinLength,
 } from 'class-validator';
 import { PartialType } from '@nestjs/mapped-types';
+import { UserRoles } from 'src/app/shared/enum/userRoles.enum';
 
 export class CreateUsuarioDto {
   @IsString()
@@ -23,9 +24,6 @@ export class CreateUsuarioDto {
   @IsNumber()
   phone: number;
 
-  @IsEnum(['player', 'coach'], { message: 'Debe ser o player o coach' })
-  rol: 'player' | 'coach';
-
   @IsString()
   @IsNotEmpty()
   @MinLength(6)
@@ -34,6 +32,9 @@ export class CreateUsuarioDto {
   @IsString()
   @IsNotEmpty()
   division: string;
+
+  @IsEnum(UserRoles, { message: 'Invalid role' })
+  rol: UserRoles;
 
   @IsString()
   @IsNotEmpty()
@@ -48,4 +49,9 @@ export class LoginDto {
 
   @IsString()
   password: string;
+}
+
+export class UpdateRolUser {
+  @IsEnum(UserRoles, { message: 'Invalid role' })
+  rol: UserRoles;
 }

@@ -1,7 +1,7 @@
 import { Document, SchemaTypes } from 'mongoose';
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
-import { Divisiones } from '../divisions/divisions.schema';
-import { Club } from '../clubs/clubs.schema';
+import { Divisiones } from '../division/divisions.schema';
+import { Club } from '../club/clubs.schema';
 
 @Schema()
 export class Usuario extends Document {

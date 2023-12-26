@@ -1,9 +1,9 @@
-import { Module } from '@nestjs/common';
+import { Module, forwardRef } from '@nestjs/common';
 import { UsuariosService } from './users.service';
 import { UsuariosController } from './users.controller';
 import { UsuarioSchema, Usuario } from './users.schema';
 import { MongooseModule } from '@nestjs/mongoose';
-import { SharedModule } from 'src/app/shared/shared.module';
+import { DivisionesModule } from '../division/divisions.module';
 
 @Module({
   controllers: [UsuariosController],
@@ -16,7 +16,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
         schema: UsuarioSchema,
       },
     ]),
-    SharedModule,
+    forwardRef(() => DivisionesModule),
   ],
 })
 export class UsuariosModule {}

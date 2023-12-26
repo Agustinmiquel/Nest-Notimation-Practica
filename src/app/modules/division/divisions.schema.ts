@@ -1,6 +1,6 @@
 import { Document, SchemaTypes } from 'mongoose';
 import { SchemaFactory, Schema, Prop } from '@nestjs/mongoose';
-import { Club } from '../clubs/clubs.schema';
+import { Club } from '../club/clubs.schema';
 
 @Schema()
 export class Divisiones extends Document {

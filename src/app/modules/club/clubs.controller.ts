@@ -23,36 +23,39 @@ export class ClubesController {
   @HttpCode(HttpStatus.CREATED)
   @ApiResponse({ status: 201, description: 'El club ha sido creado' })
   @ApiResponse({ status: 403, description: 'El club no se pudo crear' })
-  create(@Body() createClubeDto: CreateClubesDto) {
-    const u = this.clubesService.create(createClubeDto);
+  async create(@Body() createClubeDto: CreateClubesDto) {
+    const u = await this.clubesService.create(createClubeDto);
     return { statuscode: HttpStatus.CREATED, result: { data: u } };
   }
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  findAll() {
-    const u = this.clubesService.findAll();
+  async findAll() {
+    const u = await this.clubesService.findAll();
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Get(':id')
   @HttpCode(HttpStatus.OK)
-  findOne(@Param('id') id: string) {
-    const u = this.clubesService.findOne(id);
+  async findOne(@Param('id') id: string) {
+    const u = await this.clubesService.findOne(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Patch(':id')
   @HttpCode(HttpStatus.OK)
-  update(@Param('id') id: string, @Body() updateClubeDto: UpdateClubesDto) {
-    const u = this.clubesService.update(id, updateClubeDto);
+  async update(
+    @Param('id') id: string,
+    @Body() updateClubeDto: UpdateClubesDto,
+  ) {
+    const u = await this.clubesService.update(id, updateClubeDto);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 
   @Delete(':id')
   @HttpCode(HttpStatus.OK)
-  remove(@Param('id') id: string) {
-    const u = this.clubesService.remove(id);
+  async remove(@Param('id') id: string) {
+    const u = await this.clubesService.remove(id);
     return { statuscode: HttpStatus.OK, result: { data: u } };
   }
 }
