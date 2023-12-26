@@ -31,7 +31,7 @@ export class CreateUsersDto {
 
   @IsString()
   @IsNotEmpty()
-  division: string;
+  divisions: string;
 
   @IsEnum(UserRoles, { message: 'Invalid role' })
   rol: UserRoles;

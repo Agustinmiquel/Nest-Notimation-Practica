@@ -59,12 +59,12 @@ export class UsersService {
   }
 
   async update(id: string, updateUsuarioDto: UpdateUserDto) {
-    if (updateUsuarioDto.division) {
-      const division = await this.divisionsService.findOne(
-        updateUsuarioDto.division,
+    if (updateUsuarioDto.divisions) {
+      const divisions = await this.divisionsService.findOne(
+        updateUsuarioDto.divisions,
       );
 
-      if (!division) {
+      if (!divisions) {
         throw new NotFoundException('División inválida');
       }
     }
